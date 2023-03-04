@@ -12,12 +12,28 @@
         $timer++;
     }, 1000);
 
+    function changeComplexity() {
+        if (simple === 1) {
+            simple = 0
+        } else {
+            simple = 1
+        }
+        newExample()
+    }
+
     function findDivisibleNumbers(): [number, number] {
         let num1: number, num2: number;
-        do {
-            num1 = Math.floor(Math.random() * 100) + 1;
-            num2 = Math.floor(Math.random() * 100) + 2;
-        } while (num1 % num2 !== 0 || num1 === num2);
+        if (simple) {
+            do {
+                num1 = Math.floor(Math.random() * 100) + 1;
+                num2 = Math.floor(Math.random() * 10) + 1;
+            } while (num1 % num2 !== 0 || num1 === num2);
+        } else {
+            do {
+                num1 = Math.floor(Math.random() * 100) + 1;
+                num2 = Math.floor(Math.random() * 90) + 10;
+            } while (num1 % num2 !== 0 || num1 === num2);
+        }
         return [num1, num2];
     }
 
@@ -34,15 +50,16 @@
     let selectedButton = '';
     let toRecap: string[] = [];
     let buttonClass: string[] = ['', '', ''];
+    let simple:number = 1
 
     function newExample() {
         let rand = findDivisibleNumbers()
         numOne = rand[0], numTwo = rand[1]
 
         results = [
-            getRandomInt(0, 101),
-            getRandomInt(0, 101),
-            getRandomInt(0, 101)
+            getRandomInt(0, 20),
+            getRandomInt(0, 20),
+            getRandomInt(0, 20)
         ]
         let index = getRandomInt(0, 3);
         results[index] = numOne / numTwo;
@@ -74,6 +91,12 @@
 </script>
 
 <p>{numOne} ÷ {numTwo}</p>
+
+<p>
+<label><input checked={simple===1} type=radio on:change={changeComplexity}> Jednodušší</label>
+<label><input checked={simple===0} type=radio on:change={changeComplexity}> Složitější</label>
+</p>
+
 <p>
 <button
     on:click={() => handleClick(results[0], 0)}
