@@ -1,6 +1,7 @@
 <script lang="ts">
 
     import { tweened } from 'svelte/motion';
+    import { t } from "../lib/i18n";
 
     function getRandomInt(min: number, max: number) {
         min = Math.ceil(min);
@@ -80,11 +81,11 @@
 >{results[2]}</button>
 </p>
 
-<p>{exampleCount} příkladů celkem | správně: {exampleSuccess} | na zopakování: {exampleFailed}</p>
-<p>Učení si věnoval {elapsedMinutes} minut a {elapsedSeconds} sekund</p>
+<p>{exampleCount} {$t('result.examples')} | {$t('result.correct')}: {exampleSuccess} | {$t('result.to.repeat')}: {exampleFailed}</p>
+<p>{@html $t("result.time", { minutes: elapsedMinutes, seconds: elapsedSeconds })}</p>
 
 {#if toRecap.length > 0}
-<p>Zopakuj si:</p>
+<p>{$t('result.repeat')}</p>
 <p>
     {#each toRecap as example}
         {example}<br/>

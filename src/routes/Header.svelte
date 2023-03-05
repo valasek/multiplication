@@ -1,13 +1,28 @@
 <script>
 	import { page } from '$app/stores';
-	import logo from '$lib/images/svelte-logo.svg';
+	import czFlag from '$lib/images/cz.svg';
+	import gbFlag from '$lib/images/gb.svg';
 	import github from '$lib/images/github.svg';
+  	import { bind } from 'svelte/internal';
+	import { t, locale, locales } from "../lib/i18n";
+
+	let flag = czFlag;
+
+	function changeLanguage() {
+		if ($locale === "cs") {
+			flag = gbFlag
+			locale.set("en")
+		} else {
+			flag = czFlag
+			locale.set("cs")
+		}
+	}
 </script>
 
 <header>
 	<div class="corner">
-		<a href="https://kit.svelte.dev">
-			<img src={logo} alt="SvelteKit" />
+		<a href="" on:click={changeLanguage}>
+			<img src={flag} alt="Flag" />
 		</a>
 	</div>
 
@@ -17,10 +32,10 @@
 		</svg>
 		<ul>
 			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-				<a href="/">Násobení</a>
+				<a href="/">{$t('header.multiplication')}</a>
 			</li>
 			<li aria-current={$page.url.pathname === '/division' ? 'page' : undefined}>
-				<a href="/division">Dělení</a>
+				<a href="/division">{$t('header.division')}</a>
 			</li>
 		</ul>
 		<svg viewBox="0 0 2 3" aria-hidden="true">

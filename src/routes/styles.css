@@ -60,6 +60,11 @@ h2 {
 	font-size: 1rem;
 }
 
+button {
+	border-radius: 6px;
+	width: 3rem;
+}
+
 pre {
 	font-size: 16px;
 	font-family: var(--font-mono);
@@ -109,9 +114,9 @@ button:focus:not(:focus-visible) {
 }
 
 .success {
-	color: green;
+	background-color: rgb(177,203,187);
 }
 
 .fail {
-	color: red;
+	background-color: rgb(238,161,154);
 }

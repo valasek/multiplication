@@ -1,6 +1,7 @@
 <script lang="ts">
 
     import { tweened } from 'svelte/motion';
+    import { t } from "../../lib/i18n";
 
     function getRandomInt(min: number, max: number) {
         min = Math.ceil(min);
@@ -19,6 +20,7 @@
             simple = 1
         }
         newExample()
+        exampleCount--
     }
 
     function findDivisibleNumbers(): [number, number] {
@@ -37,7 +39,7 @@
         return [num1, num2];
     }
 
-    let timer = tweened(0)
+    let timer = tweened(0);
     let numOne: number;
     let numTwo: number;
     let results: number[];
@@ -53,8 +55,8 @@
     let simple:number = 1
 
     function newExample() {
-        let rand = findDivisibleNumbers()
-        numOne = rand[0], numTwo = rand[1]
+        let rand = findDivisibleNumbers();
+        numOne = rand[0], numTwo = rand[1];
 
         results = [
             getRandomInt(0, 20),
@@ -90,12 +92,12 @@
 
 </script>
 
-<p>{numOne} ÷ {numTwo}</p>
-
 <p>
-<label><input checked={simple===1} type=radio on:change={changeComplexity}> Jednodušší</label>
-<label><input checked={simple===0} type=radio on:change={changeComplexity}> Složitější</label>
+<label><input checked={simple===1} type=radio on:change={changeComplexity}> {$t("division.simple")}</label>
+<label><input checked={simple===0} type=radio on:change={changeComplexity}> {$t("division.complex")}</label>
 </p>
+
+<p>{numOne} ÷ {numTwo}</p>
 
 <p>
 <button
@@ -112,11 +114,11 @@
 >{results[2]}</button>
 </p>
 
-<p>{exampleCount} příkladů celkem | správně: {exampleSuccess} | na zopakování: {exampleFailed}</p>
-<p>Učení si věnoval {elapsedMinutes} minut a {elapsedSeconds} sekund</p>
+<p>{exampleCount} {$t('result.examples')} | {$t('result.correct')}: {exampleSuccess} | {$t('result.to.repeat')}: {exampleFailed}</p>
+<p>{@html $t("result.time", { minutes: elapsedMinutes, seconds: elapsedSeconds })}</p>
 
 {#if toRecap.length > 0}
-<p>Zopakuj si:</p>
+<p>{$t('result.repeat')}</p>
 <p>
     {#each toRecap as example}
         {example}<br/>
